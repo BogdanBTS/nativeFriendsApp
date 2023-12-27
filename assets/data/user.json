@@ -1,6 +1,6 @@
 {
   "id": "u1",
-  "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.jpg",
+  "image": "https://avatars.githubusercontent.com/u/89772290?v=4",
   "name": "Bogdan Tsaruk",
   "posts": [
     {
@@ -8,7 +8,7 @@
       "createdAt": "4 m",
       "User": {
         "id": "u1",
-        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.jpg",
+        "image": "https://avatars.githubusercontent.com/u/89772290?v=4",
         "name": "Bogdan Tsaruk"
       },
       "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
@@ -21,7 +21,7 @@
       "createdAt": "1 d",
       "User": {
         "id": "u1",
-        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim1.JPG",
+        "image": "https://avatars.githubusercontent.com/u/89772290?v=4",
         "name": "Bogdan Tsaruk"
       },
       "description": "Merch for the Real notJust Developers",
@@ -34,7 +34,7 @@
       "createdAt": "1 d",
       "User": {
         "id": "u1",
-        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim1.JPG",
+        "image": "https://avatars.githubusercontent.com/u/89772290?v=4",
         "name": "Bogdan Tsaruk"
       },
       "description": "Lovely",
