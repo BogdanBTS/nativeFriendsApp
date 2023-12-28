@@ -1,12 +1,6 @@
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { useState } from "react";
-import {
-  Entypo,
-  AntDesign,
-  FontAwesome5,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
-import LikeImage from "../../assets/images/like.png";
+import { Entypo, AntDesign, FontAwesome5 } from "@expo/vector-icons";
 
 const FeedPost = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -38,7 +32,12 @@ const FeedPost = ({ post }) => {
       <View style={styles.footer}>
         {/* Stats row */}
         <View style={styles.statsRow}>
-          <Image source={LikeImage} style={styles.likeIcon} />
+          <AntDesign
+            name="heart"
+            size={18}
+            color="red"
+            style={styles.likeIcon}
+          />
           <Text style={styles.likedBy}>
             Elon Musk and {post.numberOfLikes} others
           </Text>
@@ -51,14 +50,15 @@ const FeedPost = ({ post }) => {
             style={styles.iconButton}
           >
             <AntDesign
-              name="heart"
+              name={isLiked ? "heart" : "hearto"}
               size={20}
               color={isLiked ? "red" : "gray"}
             />
             <Text
               style={[
                 styles.iconButtonText,
-              {color: isLiked ? "red" : "gray"},]}
+                { color: isLiked ? "red" : "gray" },
+              ]}
             >
               Like
             </Text>
@@ -70,11 +70,7 @@ const FeedPost = ({ post }) => {
           </View>
 
           <View style={styles.iconButton}>
-            <MaterialCommunityIcons
-              name="share-outline"
-              size={20}
-              color={"gray"}
-            />
+            <FontAwesome5 name="share-square" size={20} color={"gray"} />
             <Text style={styles.iconButtonText}>Share</Text>
           </View>
         </View>
@@ -86,7 +82,7 @@ const FeedPost = ({ post }) => {
 const styles = StyleSheet.create({
   post: {
     width: "100%",
-    marginBottom: 20,
+    marginBottom: 16,
     backgroundColor: "#fff",
   },
 
@@ -121,7 +117,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    aspectRatio: 5 / 6,
+    aspectRatio: 1,
     marginTop: 10,
   },
 
@@ -136,8 +132,6 @@ const styles = StyleSheet.create({
     borderColor: "lightgray",
   },
   likeIcon: {
-    width: 20,
-    height: 20,
     marginRight: 5,
   },
   likedBy: {},
