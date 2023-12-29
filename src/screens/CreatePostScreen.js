@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 
 const user = {
@@ -23,10 +24,14 @@ const CreatePostScreen = () => {
   const [postTextState, setPostTextState] = useState("");
   const [image, setImage] = useState(null);
 
+  const navigation = useNavigation();
+
   const onSubmit = () => {
     // console.warn("On submit", postTextState);
     setPostTextState("");
-    setImage("");
+    // setImage("");
+
+    navigation.goBack();
   };
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
