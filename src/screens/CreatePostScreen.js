@@ -29,8 +29,6 @@ const CreatePostScreen = () => {
   const onSubmit = () => {
     // console.warn("On submit", postTextState);
     setPostTextState("");
-    // setImage("");
-
     navigation.goBack();
   };
   const pickImage = async () => {

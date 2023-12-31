@@ -1,18 +1,29 @@
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { useState } from "react";
 import { Entypo, AntDesign, FontAwesome5 } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const FeedPost = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
+  const navigation = useNavigation();
+  const manageProfile = () => {
+    navigation.navigate("Profile");
+  };
+
   return (
     <View style={styles.post}>
       {/* Header */}
       <View style={styles.header}>
-        <Image source={{ uri: post.User.image }} style={styles.profileImage} />
-        <View>
-          <Text style={styles.name}>{post.User.name}</Text>
-          <Text style={styles.subtitle}>{post.createdAt}</Text>
-        </View>
+        <Pressable onPress={manageProfile} style={styles.profilePressable}>
+          <Image
+            source={{ uri: post.User.image }}
+            style={styles.profileImage}
+          />
+          <View>
+            <Text style={styles.name}>{post.User.name}</Text>
+            <Text style={styles.subtitle}>{post.createdAt}</Text>
+          </View>
+        </Pressable>
         <Entypo
           name="dots-three-horizontal"
           size={18}
@@ -92,6 +103,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 10,
+  },
+  profilePressable: {
+    flexDirection: "row",
+    // backgroundColor: "green",
   },
   profileImage: {
     width: 40,

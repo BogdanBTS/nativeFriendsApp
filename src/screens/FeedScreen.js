@@ -1,6 +1,7 @@
 import { FlatList, Pressable, Image, Text, StyleSheet } from "react-native";
 import posts from "../../assets/data/posts.json";
 import FeedPost from "../components/FeedPost";
+
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import{useNavigation} from '@react-navigation/native';
 
