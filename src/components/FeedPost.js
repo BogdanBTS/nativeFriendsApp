@@ -7,7 +7,7 @@ const FeedPost = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const navigation = useNavigation();
   const manageProfile = () => {
-    navigation.navigate("Profile");
+    navigation.navigate("Profile", { id: post.User.id });
   };
 
   return (

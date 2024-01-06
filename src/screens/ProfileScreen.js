@@ -5,102 +5,132 @@ import {
   View,
   StyleSheet,
   Text,
+  Dimensions,
+  ActivityIndicator,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
-import posts from "../../assets/data/posts.json";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import FeedPost from "../components/FeedPost";
 import user from "../../assets/data/user.json";
-import { useNavigation } from "@react-navigation/native";
+import { MaterialIcons, Ionicons, FontAwesome5 } from "@expo/vector-icons";
 
-const ProfileScreen = () => {
+const dummyUserImg = user.image;
+const backImg = user.posts[0].image;
+
+const profilePictureWidth = Dimensions.get("window").width * 0.4;
+
+const ProfileScreenHeader = ({ user, isMe = false }) => {
+  const navigation = useNavigation();
+
+  const signOut = async () => {
+    console.warn("Sign out");
+  };
+
+  if (!user) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <Image source={{ uri: user.posts[0].image }} style={styles.backImg} />
-        <Image source={{ uri: user.image }} style={styles.image} />
-        <Text style={styles.name}>{user.name}</Text>
-      </View>
-      {/* Buttons Row */}
-      <View style={styles.buttonsRow}>
-        <Pressable
-          // onPress={onSubmit}
-          style={[styles.button, { backgroundColor: "#2a61ad" }]}
-          // disabled={!postTextState}
-        >
-          <MaterialIcons name="add-circle" size={23} color="white" />
-          <Text style={styles.buttonTextActive}>Add to Story</Text>
-        </Pressable>
-
-        <Pressable
-          // onPress={onSubmit}
-          style={[styles.button, { backgroundColor: "lightgray" }]}
-          // disabled={!postTextState}
-        >
-          <MaterialIcons name="edit" size={23} color="black" />
-          <Text style={styles.buttonText}>Edit Profile</Text>
-        </Pressable>
-
-        <Pressable
-          // onPress={onSubmit}
-          style={[styles.button, { backgroundColor: "lightgray" }]}
-          // disabled={!postTextState}
-        >
-          <Ionicons name="md-exit-outline" size={23} color="black" />
-        </Pressable>
-      </View>
-      <View style={styles.profileInfo}>
-        <View style={styles.profileInfoView}>
-          <FontAwesome5 name="user-graduate" size={20} color="gray" />
-          <Text style={styles.profileInfoText}>Graduated university</Text>
-        </View>
-        <View style={styles.profileInfoView}>
-          <FontAwesome5 name="clock" size={20} color="gray" />
-          <Text style={styles.profileInfoText}>Joined on October 2013</Text>
-        </View>
-        <View style={styles.profileInfoView}>
-          <FontAwesome5 name="location-arrow" size={20} color="gray" />
-          <Text style={styles.profileInfoText}>From Zhytomyr</Text>
-        </View>
-      </View>
-      <Text style={styles.profelePosts}>Posts</Text>
-      <FlatList
-        data={user.posts}
-        renderItem={({ item }) => <FeedPost post={item} />}
+      <Image source={{ uri: backImg }} style={styles.backImg} />
+      <Image
+        source={{ uri: user?.image || dummyUserImg }}
+        style={styles.image}
       />
+      <Text style={styles.name}>{user.name}</Text>
+      {/* Buttons Row */}
+      {isMe && (
+        <>
+          <View style={styles.buttonsRow}>
+            <Pressable
+              // onPress={}
+              style={[styles.button, { backgroundColor: "#2a61ad" }]}
+              // disabled={}
+            >
+              <MaterialIcons name="add-circle" size={23} color="white" />
+              <Text style={styles.buttonTextActive}>Add to Story</Text>
+            </Pressable>
+
+            <Pressable
+              // onPress={}
+              style={[styles.button, { backgroundColor: "lightgray" }]}
+              // disabled={}
+            >
+              <MaterialIcons name="edit" size={23} color="black" />
+              <Text style={styles.buttonText}>Edit Profile</Text>
+            </Pressable>
+
+            <Pressable
+              onPress={signOut}
+              style={[
+                styles.button,
+                { backgroundColor: "lightgray", flex: 0, width: 60 },
+              ]}
+              // disabled={}
+            >
+              <Ionicons name="md-exit-outline" size={23} color="black" />
+            </Pressable>
+          </View>
+        </>
+      )}
+
+      <View style={styles.profileInfoView}>
+        <FontAwesome5 name="user-graduate" size={20} color="gray" />
+        <Text style={styles.profileInfoText}>Graduated university</Text>
+      </View>
+      <View style={styles.profileInfoView}>
+        <FontAwesome5 name="clock" size={20} color="gray" />
+        <Text style={styles.profileInfoText}>Joined on October 2013</Text>
+      </View>
+      <View style={styles.profileInfoView}>
+        <FontAwesome5 name="location-arrow" size={20} color="gray" />
+        <Text style={styles.profileInfoText}>From Zhytomyr</Text>
+      </View>
     </View>
+  );
+};
+
+const ProfileScreen = () => {
+  const route = useRoute();
+
+  console.warn("User: ", route?.params?.id);
+  return (
+    <FlatList
+      data={user.posts}
+      renderItem={({ item }) => <FeedPost post={item} />}
+      showsVerticalScrollIndicator={false}
+      ListHeaderComponent={() => (
+        <>
+          <ProfileScreenHeader user={user} isMe={true} />
+          <Text style={styles.profelePosts}>Posts</Text>
+        </>
+      )}
+    />
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
-    // paddingTop: 10,
-    color: "green",
-  },
-  header: {
-    display: "flex",
-    alignSelf: "center",
+    alignItems: "center",
     padding: 10,
     backgroundColor: "white",
   },
   backImg: {
+    width: "100%",
     height: 230,
-    width: 400,
     overflow: "hidden",
     objectFit: "cover",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
+    marginBottom: -profilePictureWidth / 2,
   },
   image: {
-    height: 200,
-    width: 200,
+    width: profilePictureWidth,
+    aspectRatio: 1,
     borderRadius: 100,
-    marginTop: -100,
-    borderWidth: 6,
+    // marginTop: -100,
+    borderWidth: 5,
     borderColor: "#fff",
     alignSelf: "center",
     marginBottom: 5,
@@ -111,23 +141,26 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   buttonsRow: {
+    display: "flex",
+    flexDirection: "row",
+    alignSelf: "stretch",
+    justifyContent: "space-around",
     paddingVertical: 12,
     backgroundColor: "white",
-    flexDirection: "row",
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderColor: "lightgray",
-    justifyContent: "space-around",
+    marginBottom: 4,
   },
   button: {
-    alignItems: "center",
+    display: "flex",
+    flexDirection: "row",
+    alignSelf: "center",
     justifyContent: "center",
     paddingVertical: 10,
     paddingHorizontal: 17,
     borderRadius: 5,
     elevation: 3,
     marginHorizontal: "auto",
-    display: "flex",
-    flexDirection: "row",
   },
   buttonText: {
     fontSize: 15,
@@ -136,7 +169,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.25,
     color: "black",
     paddingLeft: 4,
-    // textTransform: "uppercase",
   },
   buttonTextActive: {
     fontSize: 15,
@@ -146,14 +178,13 @@ const styles = StyleSheet.create({
     color: "white",
     paddingLeft: 4,
   },
-  profileInfo: {
-    paddingVertical: 7,
-    paddingHorizontal: 10,
-    backgroundColor: "white",
-  },
+
   profileInfoView: {
     flexDirection: "row",
-    marginBottom: 7,
+    alignSelf: "stretch",
+    paddingHorizontal: 5,
+    backgroundColor: "white",
+    marginVertical: 5,
   },
   profileInfoText: {
     fontSize: 16,
