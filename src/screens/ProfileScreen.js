@@ -20,6 +20,9 @@ const profilePictureWidth = Dimensions.get("window").width * 0.4;
 
 const ProfileScreenHeader = ({ user, isMe = false }) => {
   const navigation = useNavigation();
+  const editProfile = () => {
+    navigation.navigate("Update Profile");
+  };
 
   const signOut = async () => {
     console.warn("Sign out");
@@ -52,7 +55,7 @@ const ProfileScreenHeader = ({ user, isMe = false }) => {
             </Pressable>
 
             <Pressable
-              // onPress={}
+              onPress={editProfile}
               style={[styles.button, { backgroundColor: "lightgray" }]}
               // disabled={}
             >
